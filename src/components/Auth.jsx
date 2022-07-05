@@ -7,16 +7,16 @@ import axios from "axios";
 const cookies = new Cookies();
 
 const initialState = {
-    fullName: '',
-    userName: '',
-    password: '',
-    confirmPassword: '',
-    phoneNumber: '',
-    avatarURL: '',
-}
+  fullName: "",
+  userName: "",
+  password: "",
+  confirmPassword: "",
+  phoneNumber: "",
+  avatarURL: "",
+};
 
 const Auth = () => {
-    const [form, setForm] = useState(initialState);
+  const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(true);
 
   const handleChange = (e) => {
@@ -25,32 +25,38 @@ const Auth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const { fullName, username, password, phoneNumber, avatarURL } = form;
 
-    const URL = 'http://localhost:5000/auth';
+    const URL = "http://localhost:5000/auth";
 
-    const { data: { token, userId, hashedPassword } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
-      username, password, fullName, phoneNumber, avatarURL,
+    const {
+      data: { token, userId, hashedPassword },
+    } = await axios.post(`${URL}/${isSignup ? "signup" : "login"}`, {
+      username,
+      password,
+      fullName,
+      phoneNumber,
+      avatarURL,
     });
 
-    cookies.set('token', token);
-    cookies.set('username', username);
-    cookies.set('fullName', fullName);
-    cookies.set('userId', userId);
+    cookies.set("token", token);
+    cookies.set("username", username);
+    cookies.set("fullName", fullName);
+    cookies.set("userId", userId);
 
-    if(isSignup) {
-      cookies.set('phoneNumber', phoneNumber);
-      cookies.set('avatarURL', avatarURL);
-      cookies.set('hashedPassword', hashedPassword);
+    if (isSignup) {
+      cookies.set("phoneNumber", phoneNumber);
+      cookies.set("avatarURL", avatarURL);
+      cookies.set("hashedPassword", hashedPassword);
     }
 
     window.location.reload();
-  }
+  };
 
   const switchMode = () => {
-    setIsSignup((prevIsSignup) => !prevIsSignup)
-  }
+    setIsSignup((prevIsSignup) => !prevIsSignup);
+  };
 
   return (
     <div className="auth__form-container">
@@ -115,31 +121,28 @@ const Auth = () => {
               />
             </div>
             {isSignup && (
-            <div className="auth__form-container_fields-content_input">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                name="confirmPassword"
-                type="password"
-                placeholder="Confirm Password"
-                onChange={handleChange}
-                required
-              />
-            </div>
+              <div className="auth__form-container_fields-content_input">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Confirm Password"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             )}
-            <div className='auth__form-container_fields-content_button'>
-                <button>{isSignup ? 'Sign Up' : 'Sign In'}</button>
+            <div className="auth__form-container_fields-content_button">
+              <button>{isSignup ? "Sign Up" : "Sign In"}</button>
             </div>
           </form>
-          <div className='auth__form-container_fields-account'>
-                <p>
-                    {isSignup
-                    ? 'Already have an account?'
-                    : 'Don\'t have an account?'    
-                    }
-                    <span onClick={switchMode}>
-                        {isSignup ? 'Sign In' : 'Sign Up'}
-                    </span>
-                </p>
+          <div className="auth__form-container_fields-account">
+            <p>
+              {isSignup ? "Already have an account?" : "Don't have an account?"}
+              <span onClick={switchMode}>
+                {isSignup ? "Sign In" : "Sign Up"}
+              </span>
+            </p>
           </div>
         </div>
       </div>
