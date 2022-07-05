@@ -16,19 +16,17 @@ const ListContainer = ({ children }) => {
 };
 
 const UserItem = ({ user, setSelectedUsers }) => {
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState(false)
 
   const handleSelect = () => {
-    if (selected) {
-      setSelectedUsers((prevUsers) =>
-        prevUsers.filter((prevUser) => prevUser !== user.id)
-      );
-    } else {
-      setSelectedUsers((prevUsers) => [...prevUsers, user.id]);
-    }
+      if(selected) {
+          setSelectedUsers((prevUsers) => prevUsers.filter((prevUser) => prevUser !== user.id))
+      } else {
+          setSelectedUsers((prevUsers) => [...prevUsers, user.id])
+      }
 
-    setSelected((prevSelected) => !prevSelected);
-  };
+      setSelected((prevSelected) => !prevSelected)
+  }
 
   return (
     <div className="user-item__wrapper" onClick={handleSelect}>
@@ -41,7 +39,7 @@ const UserItem = ({ user, setSelectedUsers }) => {
   );
 };
 
-const UserList = ({ selectedUsers }) => {
+const UserList = ({ setSelectedUsers }) => {
   const { client } = useChatContext();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -71,7 +69,7 @@ const UserList = ({ selectedUsers }) => {
       }
       setLoading(false);
     };
-    if (client) getUsers();
+    if (client) getUsers()
   }, []);
 
   if (error) {
@@ -105,7 +103,7 @@ const UserList = ({ selectedUsers }) => {
               index={i}
               key={user.id}
               user={user}
-              selectedUsers={selectedUsers}
+              setSelectedUsers={setSelectedUsers}
             />
           ))
         )}
